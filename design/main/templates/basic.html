@@ -1,0 +1,38 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+<header>
+    <div class="logo"><a href="{% url 'index' %}">Design.pro</a></div>
+
+        <div class="links">
+            {% if request.user.is_authenticated %}
+
+                <form method="post" action="{% url 'logout' %}" class="forms">
+                    {% csrf_token %}
+                    <button class="logout-btn" type="submit">Выйти</button>
+                </form>
+
+
+                <a href="{% url 'profile' %}">Профиль</a>
+
+            {% else %}
+    <div class="forms-btn">
+        <a href="{% url 'login' %}">Войти</a>
+        <a href="{% url 'register' %}">Зарегистрироваться</a>
+    </div>
+{% endif %}
+
+        </div>
+</header>
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>

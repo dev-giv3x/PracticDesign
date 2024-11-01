@@ -1,0 +1,145 @@
+*{
+    margin: 0;
+    padding:0;
+}
+header{
+    background-color: black;
+}
+.logo{
+    display: flex;
+    justify-content: center;
+}
+.logo > a{
+    display: inline;
+    color: white;
+    text-decoration: none;
+    font-size: 56px;
+    font-family: "Nirmala Text"
+}
+.links > .forms{
+    display: flex;
+    float: right;
+    color: white;
+    font-family: "Corbel Light";
+    font-size: 24px;
+    margin: -70px 40px 0 0;
+    gap: 30px;
+}
+.links > .forms-btn > a:hover{
+    color: burlywood;
+}
+.links > .forms-btn > a{
+    color: white;
+    text-decoration: none;
+}
+.form-group{
+    margin: 10px 110px 0 0;
+    width: 200px;
+}
+.form-group > label{
+    font-family: "Book Antiqua";
+    font-size: 16px;
+}
+.form-group > input{
+    margin: 5px 0;
+    width: 300px;
+    height: 35px;
+    border-radius: 20px;
+    border: 2px solid #acacac;
+    font-family: "Corbel";
+    padding-left: 5px ;
+    font-size: 18px;
+}
+.error-messages {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 20px;
+}
+.form > h2{
+    font-size: 36px;
+    font-family: "Bahnschrift";
+}
+.form > button{
+    font-family: "Book Antiqua";
+    font-size: 16px;
+    height: 30px;
+    width: 250px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+}
+.form-group__checkbox > input{
+    margin: 0 0 0 5px;
+}
+.form > button:hover{
+    background-color: darkslategray;
+    color: white;
+}
+.login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 20px;
+}
+
+.login-form > form> h2{
+    display: flex;
+    justify-content: center;
+    margin: 0 0 20px 0;
+    font-size: 36px;
+    font-family: "Bahnschrift";
+}
+form > tr > .label{
+    font-size: 24px;
+}
+form > input{
+    font-family: "Book Antiqua";
+    font-size: 16px;
+    margin: 10px 0 0 30px;
+    height: 30px;
+    width: 250px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+}
+form > input:hover{
+    background-color: darkslategray;
+    color: white;
+}
+.logout-btn{
+    font-family: "Corbel Light";
+    font-size: 20px;
+    width: 150px;
+    height: 30px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+}
+.links > a{
+    display: flex;
+    float: right;
+    color: white;
+    font-family: "Corbel Light";
+    font-size: 24px;
+    margin: -70px 250px 0 0;
+    text-decoration: none;
+}
+.links > a:hover{
+    color: burlywood;
+}
+.logout-btn:hover{
+    background-color: black;
+    color: burlywood;
+    border: 1px solid white;
+}
+.profile-hi{
+    font-family: Calibri;
+}
