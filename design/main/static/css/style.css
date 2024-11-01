@@ -16,7 +16,7 @@ header{
     font-size: 56px;
     font-family: "Nirmala Text"
 }
-.links > .forms{
+.links > .forms-btn{
     display: flex;
     float: right;
     color: white;
@@ -24,6 +24,11 @@ header{
     font-size: 24px;
     margin: -70px 40px 0 0;
     gap: 30px;
+}
+.links > .forms{
+    display: flex;
+    float: right;
+    margin: -70px 40px 0 0;
 }
 .links > .forms-btn > a:hover{
     color: burlywood;
@@ -122,6 +127,7 @@ form > input:hover{
     border-radius: 25px;
     border: none;
     cursor: pointer;
+
 }
 .links > a{
     display: flex;
@@ -142,4 +148,9 @@ form > input:hover{
 }
 .profile-hi{
     font-family: Calibri;
+}
+.claims > h3{
+    margin: 40px 0;
+    font-family: "Bahnschrift";
+    font-size: 28px;
 }
