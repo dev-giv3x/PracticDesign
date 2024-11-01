@@ -5,9 +5,39 @@ from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from .forms import RegistrationForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import RegistrationForm, ClaimForm
 from .models import Claim
+
+
+class DeleteClaimView(View):
+    def post(self, request, claim_id):
+        claim_instance = get_object_or_404(Claim, id=claim_id, user=request.user)
+
+        if claim_instance.status == 'new':
+            claim_instance.delete()
+            messages.success(request, 'Заявка успешно удалена.')
+        else:
+            messages.error(request, 'Ошибка: заявку можно удалить только в статусе "Новая".')
+
+        return redirect('profile')
+
+
+class CreateClaimView(CreateView):
+    model = Claim
+    form_class = ClaimForm
+    template_name = 'main/create_claim.html'  # Убедитесь, что путь к шаблону правильный
+
+    def form_valid(self, form):
+        claim_instance = form.save(commit=False)
+        claim_instance.user = self.request.user  # Предположим, что у вас есть связь с пользователем
+        claim_instance.save()
+        messages.success(self.request, 'Заявка успешно создана.')
+        return redirect('profile')  # Предположим, что у вас есть профиль
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Пожалуйста, исправьте ошибки в форме.')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 def check_username(request):

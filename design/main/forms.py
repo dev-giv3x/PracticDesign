@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import re
+from .models import Claim
 
 class RegistrationForm(forms.ModelForm):
     email = forms.EmailField(required=True)
@@ -12,21 +13,6 @@ class RegistrationForm(forms.ModelForm):
         max_length=255,
         required=True
     )
-    # last_name = forms.CharField(
-    #     label='Фамилия',
-    #     max_length=255,
-    #     required=True
-    # )
-    # first_name = forms.CharField(
-    #     label='Имя',
-    #     max_length=255,
-    #     required=True
-    # )
-    # patronymic = forms.CharField(
-    #     label='Отчество',
-    #     max_length=255,
-    #     required=True
-    # )
     username = forms.CharField(
         label='Логин',
         max_length=150,
@@ -45,21 +31,6 @@ class RegistrationForm(forms.ModelForm):
         full_name = self.cleaned_data.get('full_name')
         if not re.match(r'^[а-яА-Я-]+$', full_name):
             raise ValidationError('ФИО должно содержать только кириллические буквы, дефис и пробелы')
-    # def clean_last_name(self):
-    #     last_name = self.cleaned_data.get('last_name')
-    #     if not re.match(r'^[а-яА-ЯёЁА-Я\s-]+$', last_name):
-    #         raise ValidationError('Фамилия должна содержать только кириллицу, дефисы и пробелы.')
-    #     return last_name
-    # def clean_first_name(self):
-    #     first_name = self.cleaned_data.get('first_name')
-    #     if not re.match(r'^[a-zA-Z-]+$', first_name):
-    #         raise ValidationError('ФИО должно содержать только кириллицу, дефисы и пробелы.')
-    #     return first_name
-    # def clean_patronymic_name(self):
-    #     patronymic = self.cleaned_data.get('patronymic')
-    #     if not re.match(r'^[a-zA-Z-]+$', patronymic):
-    #         raise ValidationError('ФИО должно содержать только кириллицу, дефисы и пробелы.')
-    #     return patronymic
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get('password1')
@@ -71,6 +42,20 @@ class RegistrationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update({'class': 'form-control'})
+
+class ClaimForm(forms.ModelForm):
+    class Meta:
+        model = Claim
+        fields = ['title', 'description', 'category', 'photo']
+
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+        if photo:
+            if photo.size > 2 * 1024 * 1024:  # 2MB
+                raise forms.ValidationError('Размер фото не должен превышать 2MB.')
+            if not photo.name.endswith(('.jpg', '.jpeg', '.png', '.bmp')):
+                raise forms.ValidationError('Недопустимый формат файла. Используйте jpg, jpeg, png или bmp.')
+        return photo
 
 class PhotoForm(forms.Form):
     photo = forms.ImageField()
