@@ -21,9 +21,9 @@ class Claim(models.Model):
         return (f'{self.name}, {self.category}')
 
     LOAN_STATUS = (
-        ('n', 'Новая'),
-        ('a', 'Принято в работу'),
-        ('c', 'Выполнено'),
+        ('new', 'Новая'),
+        ('accepted', 'Принято в работу'),
+        ('completed', 'Выполнено'),
     )
 
-    status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='n', help_text='Выберите категорию')
+    status = models.CharField(max_length=16, choices=LOAN_STATUS, blank=True, default='new', help_text='Выберите категорию')

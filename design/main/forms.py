@@ -44,14 +44,15 @@ class RegistrationForm(forms.ModelForm):
             field.widget.attrs.update({'class': 'form-control'})
 
 class ClaimForm(forms.ModelForm):
+
     class Meta:
         model = Claim
-        fields = ['title', 'description', 'category', 'photo']
+        fields = ['name', 'description', 'category', 'photo']
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo')
         if photo:
-            if photo.size > 2 * 1024 * 1024:  # 2MB
+            if photo.size > 2 * 1024 * 1024:
                 raise forms.ValidationError('Размер фото не должен превышать 2MB.')
             if not photo.name.endswith(('.jpg', '.jpeg', '.png', '.bmp')):
                 raise forms.ValidationError('Недопустимый формат файла. Используйте jpg, jpeg, png или bmp.')

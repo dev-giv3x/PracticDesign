@@ -2,9 +2,25 @@
 
 {% block content %}
 {% block title %} <title>Главная</title>{% endblock %}
+    <p>Заявок в статусе "Принято в работу": {{ accepted_requests_count }}</p>
 
- <div class="claims">
-        <h3>Последние выполненые заявки:</h3>
-        {}
-    </div>
+    <h2>Последние выполненные заявки</h2>
+    {% if completed_requests %}
+        <ul class="claim-list">
+            {% for claim in completed_requests %}
+                <li>
+                    <p><strong>Дата создания:</strong> {{ claim.created_time|date:"d M Y H:i" }}</p>
+                    <h3>{{ claim.name }}</h3>
+                    <p>Категория: {{ claim.get_category_display }}</p>
+                    {% if claim.photo %}
+                        <img src="{{ claim.photo.url }}" alt="{{ claim.name }}" style="max-width: 200px;">
+                    {% else %}
+                        <p>Фото не загружено.</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет выполненных заявок.</p>
+    {% endif %}
 {% endblock %}

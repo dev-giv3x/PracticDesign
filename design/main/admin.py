@@ -1,15 +1,13 @@
 from django.contrib import admin
-
-from .models import Category, Claim
-
-# admin.site.register(Category)
-# admin.site.register(Claim)
+from .models import Claim, Category
 
 @admin.register(Claim)
-class ClaimAdmin(admin.ModelAdmin):
-    pass
+class RequestAdmin(admin.ModelAdmin):
+    list_display = ['name', 'status', 'created_time', 'user']
+    list_filter = ['status', 'created_time']
+    search_fields = ['name', 'description', 'user__username']
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
-
+    list_display = ['name']
+    search_fields = ['name']

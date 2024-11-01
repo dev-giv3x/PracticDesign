@@ -1,11 +1,30 @@
 {% extends 'basic.html' %}
 
 {% block content %}
-<main>
-    <h1 class="profile-hi">Здравствуйте, {{user.username}}</h1>
-    <div class="profile-form">
-        <h2>Ваши заявки:</h2>
-    </div>
-</main>
-{% endblock %}
+    <h2 class="profile-hi"> Здравствуйте, {{ user.username }}</h2>
+<div class="management">
+    <form action="{% url 'create_claim' %}"><button class="btn btn-primary">Создать заявку</button></form></div>
+<ul class="claim-list">
+    {% for claim in user_requests %}
+        <li class="claim-item">
+            <h4>{{ claim.name }}</h4>
+            <p>{{ claim.description }}</p>
+            <p class="status">Статус: {{ claim.status }}</p>
+            <p>Дата создания: {{ claim.created_time|date:"d.m.Y H:i" }}</p>
+            {% if claim.photo %}
+                <img src="{{ claim.photo.url }}" alt="{{ claim.name }}" class="claim-photo">
+            {% else %}
+                <p>Фото не загружено.</p>
+            {% endif %}
+            <form method="get" action="{% url 'delete_claim' claim.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить заявку</button>
+</form>
+        </li>
+    {% empty %}
+        <li class="none-claim">У вас нет поданных заявок.</li>
+    {% endfor %}
+</ul>
 
+    </ul>
+{% endblock %}

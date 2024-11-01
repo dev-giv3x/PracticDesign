@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views import View
@@ -7,33 +7,52 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistrationForm, ClaimForm
-from .models import Claim
+from django.contrib.auth.decorators import login_required
+from .models import Claim, Category
 
+@login_required
+def index(request):
+    completed_requests = Claim.objects.filter(status='completed').order_by('-created_time')[:4]
+
+    accepted_requests_count = Claim.objects.filter(status='accepted').count()
+
+    context = {
+        'completed_requests': completed_requests,
+        'accepted_requests_count': accepted_requests_count,
+    }
+    return render(request, 'main/index.html', context)
+
+
+def create_claim(request):
+    categories = Category.objects.all()
+    form = ClaimForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('profile')
+    return render(request, 'main/create_claim.html', {'form': form, 'categories': categories})
 
 class DeleteClaimView(View):
+    def get(self, request, claim_id):
+        claim_instance = get_object_or_404(Claim, id=claim_id, user=request.user)
+        return render(request, 'main/delete_claim.html', {'claim': claim_instance})
+
     def post(self, request, claim_id):
         claim_instance = get_object_or_404(Claim, id=claim_id, user=request.user)
-
         if claim_instance.status == 'new':
             claim_instance.delete()
-            messages.success(request, 'Заявка успешно удалена.')
         else:
-            messages.error(request, 'Ошибка: заявку можно удалить только в статусе "Новая".')
-
-        return redirect('profile')
-
+            return redirect('profile')
 
 class CreateClaimView(CreateView):
     model = Claim
     form_class = ClaimForm
-    template_name = 'main/create_claim.html'  # Убедитесь, что путь к шаблону правильный
+    template_name = 'main/create_claim.html'
 
     def form_valid(self, form):
         claim_instance = form.save(commit=False)
-        claim_instance.user = self.request.user  # Предположим, что у вас есть связь с пользователем
+        claim_instance.user = self.request.user
         claim_instance.save()
-        messages.success(self.request, 'Заявка успешно создана.')
-        return redirect('profile')  # Предположим, что у вас есть профиль
+        return redirect('profile')
 
     def form_invalid(self, form):
         messages.error(self.request, 'Пожалуйста, исправьте ошибки в форме.')
