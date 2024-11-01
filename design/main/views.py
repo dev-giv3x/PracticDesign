@@ -2,11 +2,18 @@ from django.views.generic import CreateView, DetailView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views import View
+from django.http import JsonResponse
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from .models import Claim
 
+
+def check_username(request):
+    username = request.GET.get('username', None)
+    is_taken = User.objects.filter(username=username).exists()
+    return JsonResponse({'is_taken': is_taken})
 
 class CustomLoginView(LoginView):
     template_name = 'authorization/login.html'

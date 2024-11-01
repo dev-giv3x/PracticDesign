@@ -43,7 +43,7 @@ class RegistrationForm(forms.ModelForm):
         return username
     def clean_full_name(self):
         full_name = self.cleaned_data.get('full_name')
-        if not re.match(r'^[a-zA-Z-]+$', full_name):
+        if not re.match(r'^[а-яА-Я-]+$', full_name):
             raise ValidationError('ФИО должно содержать только кириллические буквы, дефис и пробелы')
     # def clean_last_name(self):
     #     last_name = self.cleaned_data.get('last_name')

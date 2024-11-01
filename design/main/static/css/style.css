@@ -58,7 +58,6 @@ header{
 .error-messages {
     color: red;
     font-size: 14px;
-    margin-top: 10px;
 }
 .form{
     display: flex;
@@ -153,4 +152,8 @@ form > input:hover{
     margin: 40px 0;
     font-family: "Bahnschrift";
     font-size: 28px;
+}
+.ok-messages{
+    color: green;
+    font-size: 14px;
 }

@@ -20,6 +20,29 @@
             <div class="error-messages">{{ form.username.errors }}</div>
         {% endif %}
     </div>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#id_username').on('blur', function() {
+            let username = $(this).val();
+            $.ajax({
+                url: "{% url 'check_username' %}",
+                data: {
+                    'username': username
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.is_taken) {
+                        $('#username-error').text("Этот логин уже занят.");
+                    } else {
+                        $('#username-error').text("");
+                    }
+                }
+            });
+        });
+    });
+</script>
+<div class="error-messages" id="username-error"></div>
 
     <div class="form-group">
         <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
