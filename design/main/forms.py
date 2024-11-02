@@ -51,12 +51,21 @@ class ClaimForm(forms.ModelForm):
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo')
-        if photo:
-            if photo.size > 2 * 1024 * 1024:
-                raise forms.ValidationError('Размер фото не должен превышать 2MB.')
-            if not photo.name.endswith(('.jpg', '.jpeg', '.png', '.bmp')):
-                raise forms.ValidationError('Недопустимый формат файла. Используйте jpg, jpeg, png или bmp.')
+        if not photo:
+            raise forms.ValidationError('Пожалуйста, загрузите фото.')
+        if photo.size > 2 * 1024 * 1024:
+            raise forms.ValidationError('Размер фото не должен превышать 2MB.')
+        if not photo.name.endswith(('.jpg', '.jpeg', '.png', '.bmp')):
+            raise forms.ValidationError('Недопустимый формат файла. Используйте jpg, jpeg, png или bmp.')
         return photo
+
+class StatusFilterForm(forms.Form):
+    status_choices = (
+        ('new', 'Новая'),
+        ('accepted', 'Принято в работу'),
+        ('completed', 'Выполнено'),
+    )
+    status = forms.ChoiceField(choices=status_choices, required=False)
 
 class PhotoForm(forms.Form):
     photo = forms.ImageField()

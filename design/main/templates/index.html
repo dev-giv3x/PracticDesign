@@ -2,18 +2,19 @@
 
 {% block content %}
 {% block title %} <title>Главная</title>{% endblock %}
-    <p>Заявок в статусе "Принято в работу": {{ accepted_requests_count }}</p>
 
-    <h2>Последние выполненные заявки</h2>
+ <h2 class="head-show">Заявок в статусе "Принято в работу": {{ accepted_requests_count }}</h2>
+
+    <h3 class="last-show">Последние выполненные заявки</h3>
     {% if completed_requests %}
-        <ul class="claim-list">
+        <ul class="claim-list-show">
             {% for claim in completed_requests %}
                 <li>
+                    <h3 class="name-show">Заявка: {{ claim.name }}</h3>
                     <p><strong>Дата создания:</strong> {{ claim.created_time|date:"d M Y H:i" }}</p>
-                    <h3>{{ claim.name }}</h3>
-                    <p>Категория: {{ claim.get_category_display }}</p>
+                    <p>Категория: {{ claim.category.name}}</p>
                     {% if claim.photo %}
-                        <img src="{{ claim.photo.url }}" alt="{{ claim.name }}" style="max-width: 200px;">
+                        <img src="{{ claim.photo.url }}" alt="{{ claim.name }}">
                     {% else %}
                         <p>Фото не загружено.</p>
                     {% endif %}
@@ -23,4 +24,5 @@
     {% else %}
         <p>Нет выполненных заявок.</p>
     {% endif %}
+
 {% endblock %}

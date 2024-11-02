@@ -144,6 +144,7 @@ form > input:hover{
     background-color: black;
     color: burlywood;
     border: 1px solid white;
+    transition: background-color 0.3s ease;
 }
 .profile-hi{
     font-family: Calibri;
@@ -227,6 +228,7 @@ form > input:hover{
     width: 200px;
     height: 35px;
     border-radius: 10px;
+    cursor: pointer;
 }
 .management > form > button:hover{
     background-color: gray;
@@ -238,7 +240,7 @@ form > input:hover{
     flex-wrap: wrap;
     align-items: center;
     padding: 0;
-    margin: 0;
+    margin: 40px 0 0 0;
     list-style-type: none;
     gap: 40px;
     justify-content: center;
@@ -317,4 +319,88 @@ form > input:hover{
     display: inline-block;
     margin-top: 10px;
     text-decoration: none;
+}
+.links > .admin-btn{
+    margin: -70px 400px 0 0;
+}
+.show-claims{
+    margin: 20px 20px;
+}
+.show-claims > ul > li{
+    list-style: none;
+}
+.show-claims > ul > li > h3{
+    font-family: "Bahnschrift";
+    font-weight: 400;
+}
+.name-show{
+    font-family: "Bahnschrift";
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+}
+.name-show{
+    color: #555;
+}
+.claim-list-show {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0;
+    margin: 40px 0 0 40px;
+    list-style-type: none;
+    gap: 40px;
+}
+
+
+.claim-list-show > li {
+    background-color: #f7f2eb;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.claim-list-show > li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.claim-list-show h4 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.claim-list-show p {
+    color: #555;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.claim-list-show img {
+    display: block;
+    margin: 15px auto;
+    max-width: 70%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.claim-list-show .status {
+    font-weight: bold;
+    color: #888;
+    text-align: center;
+    margin-top: 5px;
+}
+.head-show{
+    margin: 10px 0 0 40px;
+}
+.last-show{
+    margin: 10px 0 0 40px;
 }
