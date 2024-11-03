@@ -14,7 +14,7 @@
                     <p><strong>Дата создания:</strong> {{ claim.created_time|date:"d M Y H:i" }}</p>
                     <p>Категория: {{ claim.category.name}}</p>
                     {% if claim.photo %}
-                        <img src="{{ claim.photo.url }}" alt="{{ claim.name }}">
+                        <img src="{{ claim.admin_photo.url }}" alt="{{ claim.name }}">
                     {% else %}
                         <p>Фото не загружено.</p>
                     {% endif %}
