@@ -8,11 +8,20 @@
     {% for claim in user_requests %}
         <li class="claim-item">
             <h4>{{ claim.name }}</h4>
-            <p>{{ claim.description }}</p>
-            <p class="status">Статус: {{ claim.status }}</p>
+            {% if claim.comment %}
+            <p>Комментарий: {{ claim.comment }}</p>
+            {% else %}
+            <p>Описание: {{ claim.description }}</p>
+            {% endif %}
+            <p class="status">Статус: {{ claim.get_status_display }}</p>
             <p>Дата создания: {{ claim.created_time|date:"d.m.Y H:i" }}</p>
             {% if claim.photo %}
+                <p>Фото до:</p>
                 <img src="{{ claim.photo.url }}" alt="{{ claim.name }}" class="claim-photo">
+                {% if claim.admin_photo %}
+            <p>Фото после:</p>
+            <img src="{{ claim.admin_photo.url }}" alt="{{ claim.admin_photo }}" class="claim-photo">
+                {% endif %}
             {% else %}
                 <p>Фото не загружено.</p>
             {% endif %}

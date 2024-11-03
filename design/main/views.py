@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Claim, Category
 
 
-@login_required
 def index(request):
     completed_requests = Claim.objects.filter(status='completed').order_by('-created_time')[:4]
 

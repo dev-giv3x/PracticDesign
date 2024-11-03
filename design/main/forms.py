@@ -67,5 +67,30 @@ class StatusFilterForm(forms.Form):
     )
     status = forms.ChoiceField(choices=status_choices, required=False)
 
+class ClaimStatusForm(forms.ModelForm):
+    class Meta:
+        model = Claim
+        fields = ['status', 'comment', 'admin_photo']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        status = cleaned_data.get("status")
+        comment = cleaned_data.get("comment")
+        admin_photo = cleaned_data.get("admin_photo")
+
+        if self.instance.status in ['accepted', 'completed'] and status == 'new':
+            self.add_error('status',
+                           'Нельзя изменить статус на "Новая", если он уже "Принято в работу" или "Выполнено".')
+
+        if status == 'accepted' and not comment:
+            self.add_error('comment', 'Комментарий обязателен при смене статуса на "Принято в работу".')
+
+        if status == 'completed' and not admin_photo:
+            self.add_error('admin_photo', 'Фото обязательно при смене статуса на "Выполнено".')
+
+        return cleaned_data
+
+
+
 class PhotoForm(forms.Form):
     photo = forms.ImageField()

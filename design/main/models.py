@@ -1,5 +1,4 @@
 from django.db import models
-# from django import forms
 from django.contrib.auth.models import User
 
 
@@ -14,6 +13,7 @@ class Claim(models.Model):
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1, help_text="Выберите категорию")
     photo = models.ImageField(upload_to='photos/', null=True, blank=True)
+    admin_photo = models.ImageField(upload_to='admin_photos/', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
     comment = models.TextField(null=True, blank=True,
